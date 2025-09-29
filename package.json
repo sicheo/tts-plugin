@@ -1,0 +1,16 @@
+{
+  "name": "tts-plugin",
+  "version": "1.0.0",
+  "description": "TTS plugin for OHMS project",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "P. Pulicani",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
