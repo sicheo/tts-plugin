@@ -1,0 +1,36 @@
+{
+  "name": "tts-plugin",
+  "version": "1.0.0",
+  "description": "Plugin for Text-to-Speech (TTS) functionality",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "tts",
+    "text-to-speech",
+    "plugin",
+    "speech",
+    "audio",
+    "voice",
+    "accessibility"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sicheo/tts-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sicheo/tts-plugin/issues"
+  },
+  "homepage": "https://github.com/sicheo/tts-plugin#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
