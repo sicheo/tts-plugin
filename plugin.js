@@ -218,13 +218,4 @@ function processValue(metricId, rawValue) {
   }
 }
 
-// Funzione per encoding (se necessaria per downlink)
-function encodeDownlink(input) {
-  return {
-    bytes: [],
-    fPort: 1,
-    warnings: [],
-    errors: ["Downlink non implementato"]
-  };
-}
-
+export { decodeUplink }
