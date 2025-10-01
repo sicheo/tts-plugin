@@ -17,7 +17,7 @@ function decodeUplink(input) {
 
   try {
       const result = parseLoRaPayload(bytes);
-      console.log("Decoded Metrics:", result);
+      //console.log("Decoded Metrics:", result);
       result.metrics.QC = result.qc || 0;
       result.metrics.TIMESTAMP = Math.floor(Date.now() / 1000);
       return {
@@ -76,6 +76,7 @@ function parseLoRaPayload(bytes) {
     const metricId = (opcodeByte >> 2) & 0x3F;  // 6 bit superiori
     const length = opcodeByte & 0x03;           // 2 bit inferiori
 
+   
     let value;
     let valueBytes;
 
