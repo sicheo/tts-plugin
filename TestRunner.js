@@ -66,7 +66,7 @@ testRunner.addTest("Payload Vuoto", () => {
     console.log("Input:", JSON.stringify(input));
     console.log("Output:", JSON.stringify(result, null, 2));
 
-    assert(result.data, "Deve avere campo data");
+    assert(result.metrics, "Deve avere campo metrics");
     assert(result.warnings.length > 0, "Deve avere warnings per payload vuoto");
 });
 
@@ -80,7 +80,7 @@ testRunner.addTest("Header Parsing - Fase 4A Linea 1", () => {
     console.log("Input bytes:", input.bytes.map(b => `0x${b.toString(16).padStart(2, '0')}`).join(' '));
     console.log("Output:", JSON.stringify(result, null, 2));
 
-    assert(result.data.metrics['SENS_Digil2_TC_F4A_L1.avg'] === 120, "Deve decodificare media tiro F4A_L1");
+    assert(result.metrics['SENS_Digil2_TC_F4A_L1.avg'] === 120, "Deve decodificare media tiro F4A_L1");
 });
 
 // Test 3: Temperatura con offset
@@ -92,7 +92,7 @@ testRunner.addTest("Temperatura con Offset", () => {
     console.log("Input bytes:", input.bytes.map(b => `0x${b.toString(16).padStart(2, '0')}`).join(' '));
     console.log("Output:", JSON.stringify(result, null, 2));
 
-    assert(result.data.metrics['SENS_Digil2_Temperature.avg'] === 25, "Deve applicare offset -50 alla temperatura (75-50=25)");
+    assert(result.metrics['SENS_Digil2_Temperature.avg'] === 25, "Deve applicare offset -50 alla temperatura (75-50=25)");
 });
 
 // Test 4: Metriche multiple
@@ -105,9 +105,9 @@ testRunner.addTest("Metriche Multiple", () => {
     console.log("Input bytes:", input.bytes.map(b => `0x${b.toString(16).padStart(2, '0')}`).join(' '));
     console.log("Output:", JSON.stringify(result, null, 2));
 
-    assert(result.data.metrics['SENS_Digil2_TC_F8B_L2.avg'] === 150, "Media tiro F8B_L2");
-    assert(result.data.metrics['SENS_Digil2_TC_F8B_L2.max'] === 180, "Max tiro F8B_L2");
-    assert(result.data.metrics['SENS_Digil2_BatteryLevel_Percent.val'] === 85, "Livello batteria");
+    assert(result.metrics['SENS_Digil2_TC_F8B_L2.avg'] === 150, "Media tiro F8B_L2");
+    assert(result.metrics['SENS_Digil2_TC_F8B_L2.max'] === 180, "Max tiro F8B_L2");
+    assert(result.metrics['SENS_Digil2_BatteryLevel_Percent.val'] === 85, "Livello batteria");
 });
 
 // Test 5: Allarmi
@@ -120,8 +120,8 @@ testRunner.addTest("Allarmi e Warning", () => {
     console.log("Input bytes:", input.bytes.map(b => `0x${b.toString(16).padStart(2, '0')}`).join(' '));
     console.log("Output:", JSON.stringify(result, null, 2));
 
-    assert(result.data.metrics['ALG_Digil2_Alm_Min_TC_F12A_L1.calc'] === 1, "Allarme tiro basso F12A_L1");
-    assert(result.data.metrics['ALG_Digil2_War_Max_TC_F12A_L1.calc'] === 1, "Warning tiro alto F12A_L1");
+    assert(result.metrics['ALG_Digil2_Alm_Min_TC_F12A_L1.calc'] === 1, "Allarme tiro basso F12A_L1");
+    assert(result.metrics['ALG_Digil2_War_Max_TC_F12A_L1.calc'] === 1, "Warning tiro alto F12A_L1");
 });
 
 // Test 6: Evento Device Boot
@@ -135,7 +135,7 @@ testRunner.addTest("Evento Device Boot", () => {
     console.log("Input bytes:", input.bytes.map(b => `0x${b.toString(16).padStart(2, '0')}`).join(' '));
     console.log("Output:", JSON.stringify(result, null, 2));
 
-    assert(result.data.metrics['ALG_Digil2_Reboot.calc'] === bootTimestamp, "Deve decodificare timestamp boot");
+    assert(result.metrics['ALG_Digil2_Reboot.calc'] === bootTimestamp, "Deve decodificare timestamp boot");
 });
 
 // Test 7: Valori a 2 byte
@@ -147,7 +147,7 @@ testRunner.addTest("Valori Multi-byte", () => {
     console.log("Input bytes:", input.bytes.map(b => `0x${b.toString(16).padStart(2, '0')}`).join(' '));
     console.log("Output:", JSON.stringify(result, null, 2));
 
-    assert(result.data.metrics['SENS_Digil2_TC_F4A_L1.avg'] === 400, "Deve decodificare valore a 2 byte");
+    assert(result.metrics['SENS_Digil2_TC_F4A_L1.avg'] === 400, "Deve decodificare valore a 2 byte");
 });
 
 // Test 8: Payload malformato

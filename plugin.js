@@ -16,17 +16,19 @@ function decodeUplink(input) {
   }
 
   try {
-    const result = parseLoRaPayload(bytes);
-    
-    return {
-      data: {
-        metrics: result.metrics,
-        QC: result.qc || 0,
-        TIMESTAMP: Math.floor(Date.now() / 1000)
-      },
-      warnings: result.warnings || [],
-      errors: result.errors || []
-    };
+      const result = parseLoRaPayload(bytes);
+      console.log("Decoded Metrics:", result);
+      result.metrics.QC = result.qc || 0;
+      result.metrics.TIMESTAMP = Math.floor(Date.now() / 1000);
+      return {
+          //data: {
+              metrics: result.metrics,
+              //QC: result.qc || 0,
+              //TIMESTAMP: Math.floor(Date.now() / 1000)
+          //},
+          warnings: result.warnings || [],
+          errors: result.errors || []
+      };
   } catch (error) {
     return {
       data: {},
