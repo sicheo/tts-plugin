@@ -162,4 +162,16 @@ testRunner.addTest("Payload Malformato", () => {
     assert(result.errors.length > 0, "Deve segnalare errore per payload malformato");
 });
 
+// Test 9: Caso reale
+testRunner.addTest("Valori Multi-byte", () => {
+    // Header: 0x80 + metrica con valore a 2 byte: 0x05 (id=1, length=01) + 0x0190 (400)
+    const input = { bytes: [0x80, 0x08, 0x50, 0x04, 0x50,0x14,0x14,0x0C,0x50,0x18,0x14,0x10,0x14], fPort: 1 };
+    const result = decodeUplink(input);
+
+    console.log("Input bytes:", input.bytes.map(b => `0x${b.toString(16).padStart(2, '0')}`).join(' '));
+    console.log("Output:", JSON.stringify(result, null, 2));
+
+    assert(result.metrics['SENS_Digil2_TC_F4A_L1.avg'] === 400, "Deve decodificare valore a 2 byte");
+});
+
 export { testRunner };
