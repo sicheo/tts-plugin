@@ -140,3 +140,6 @@ vite.config.ts.timestamp-*
 
 # venv
 venv/
+
+# temp upload files
+uploads/file-*
