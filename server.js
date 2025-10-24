@@ -6,8 +6,6 @@ const multer = require('multer');
 const crypto = require('crypto');
 const axios = require('axios');
 
-// API key local
-// NNSXS.QZULOVN6L3GKO5DYU6FQRFVD7UDKNRBOTJ6E5FA.V5BSGFES4CWUDQR5BIL56D666GBHG3WKVEV3RSIDWLSP2HPM43XA
 
 const app = express();
 const PORT = process.env.PORT || 3000;
