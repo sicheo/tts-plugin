@@ -34,12 +34,12 @@ const storage = multer.diskStorage({
 const upload = multer({ 
   storage: storage,
   fileFilter: (req, file, cb) => {
-    const allowedExts = ['.py', '.txt'];
+    const allowedExts = ['.py', '.txt','.json'];
     const ext = path.extname(file.originalname).toLowerCase();
     if (allowedExts.includes(ext)) {
       cb(null, true);
     } else {
-      cb(new Error('Solo file .py e .txt sono permessi'));
+      cb(new Error('Solo file .py .json e .txt sono permessi'));
     }
   },
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB max
