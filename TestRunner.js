@@ -43,7 +43,7 @@ class TestRunner {
 }
 
 function assert(condition, message) {
-    if (condition) {
+    if (!condition) {
         throw new Error(message);
     }
 }
@@ -66,7 +66,7 @@ testRunner.addTest("Payload Vuoto", () => {
     console.log("Input:", JSON.stringify(input));
     console.log("Output:", JSON.stringify(result, null, 2));
 
-    assert(result.metrics, "Deve avere campo metrics");
+    assert(result.data, "Deve avere campo data");
     assert(result.warnings.length > 0, "Deve avere warnings per payload vuoto");
 });
 
@@ -80,7 +80,7 @@ testRunner.addTest("Header Parsing - Fase 4A Linea 1", () => {
     console.log("Input bytes:", input.bytes.map(b => `0x${b.toString(16).padStart(2, '0')}`).join(' '));
     console.log("Output:", JSON.stringify(result, null, 2));
 
-    assert(result.metrics['SENS_Digil2_TC_F4A_L1.avg'] === 120, "Deve decodificare media tiro F4A_L1");
+    assert(result.data.metrics['SENS_FBG_TC_F4A_L1.avg'] === 120, "Deve decodificare media tiro F4A_L1");
 });
 
 // Test 3: Temperatura con offset
@@ -92,7 +92,7 @@ testRunner.addTest("Temperatura con Offset", () => {
     console.log("Input bytes:", input.bytes.map(b => `0x${b.toString(16).padStart(2, '0')}`).join(' '));
     console.log("Output:", JSON.stringify(result, null, 2));
 
-    assert(result.metrics['SENS_Digil2_Temperature.avg'] === 25, "Deve applicare offset -50 alla temperatura (75-50=25)");
+    assert(result.data.metrics['SENS_FBG_Temp_F4A_L1.avg'] === 25, "Deve applicare offset -50 alla temperatura (75-50=25)");
 });
 
 // Test 4: Metriche multiple
@@ -105,9 +105,9 @@ testRunner.addTest("Metriche Multiple", () => {
     console.log("Input bytes:", input.bytes.map(b => `0x${b.toString(16).padStart(2, '0')}`).join(' '));
     console.log("Output:", JSON.stringify(result, null, 2));
 
-    assert(result.metrics['SENS_Digil2_TC_F8B_L2.avg'] === 150, "Media tiro F8B_L2");
-    assert(result.metrics['SENS_Digil2_TC_F8B_L2.max'] === 180, "Max tiro F8B_L2");
-    assert(result.metrics['SENS_Digil2_BatteryLevel_Percent.val'] === 85, "Livello batteria");
+    assert(result.data.metrics['SENS_FBG_TC_F8B_L2.avg'] === 150, "Media tiro F8B_L2");
+    assert(result.data.metrics['SENS_FBG_TC_F8B_L2.max'] === 180, "Max tiro F8B_L2");
+    assert(result.data.metrics['ALG_FBG_Liv_Batteria.calc'] === 85, "Livello batteria");
 });
 
 // Test 5: Allarmi
@@ -120,22 +120,24 @@ testRunner.addTest("Allarmi e Warning", () => {
     console.log("Input bytes:", input.bytes.map(b => `0x${b.toString(16).padStart(2, '0')}`).join(' '));
     console.log("Output:", JSON.stringify(result, null, 2));
 
-    assert(result.metrics['ALG_Digil2_Alm_Min_TC_F12A_L1.calc'] === 1, "Allarme tiro basso F12A_L1");
-    assert(result.metrics['ALG_Digil2_War_Max_TC_F12A_L1.calc'] === 1, "Warning tiro alto F12A_L1");
+    assert(result.data.metrics['ALG_FBG_Alm_Tiro_Bassa_F12A_L1.calc'] === 1, "Allarme tiro basso F12A_L1");
+    assert(result.data.metrics['ALG_FBG_Warn_Tiro_Max_F12A_L1.calc'] === 1, "Warning tiro alto F12A_L1");
 });
 
 // Test 6: Evento Device Boot
 testRunner.addTest("Evento Device Boot", () => {
     // Header: 0x80 + evento boot: 0xA0 (id=40, length ignorato) + timestamp "20241201123000001"
-    const bootTimestamp = "20241201123000001";
+    const bootTimestamp = "20251114110800001";
     const timestampBytes = Array.from(bootTimestamp).map(char => char.charCodeAt(0));
     const input = { bytes: [0x80, 0xA0, ...timestampBytes], fPort: 1 };
     const result = decodeUplink(input);
+    
 
     console.log("Input bytes:", input.bytes.map(b => `0x${b.toString(16).padStart(2, '0')}`).join(' '));
+    console.log("Input base 64", base64ArrayBuffer(input.bytes))
     console.log("Output:", JSON.stringify(result, null, 2));
 
-    assert(result.metrics['ALG_Digil2_Reboot.calc'] === bootTimestamp, "Deve decodificare timestamp boot");
+    assert(result.data.metrics['ALG_FBG_Start_Up_Device.calc'] === bootTimestamp, "Deve decodificare timestamp boot");
 });
 
 // Test 7: Valori a 2 byte
@@ -147,7 +149,7 @@ testRunner.addTest("Valori Multi-byte", () => {
     console.log("Input bytes:", input.bytes.map(b => `0x${b.toString(16).padStart(2, '0')}`).join(' '));
     console.log("Output:", JSON.stringify(result, null, 2));
 
-    assert(result.metrics['SENS_Digil2_TC_F4A_L1.avg'] === 400, "Deve decodificare valore a 2 byte");
+    assert(result.data.metrics['SENS_FBG_TC_F4A_L1.avg'] === 400, "Deve decodificare valore a 2 byte");
 });
 
 // Test 8: Payload malformato
@@ -171,7 +173,47 @@ testRunner.addTest("Valori Multi-byte", () => {
     console.log("Input bytes:", input.bytes.map(b => `0x${b.toString(16).padStart(2, '0')}`).join(' '));
     console.log("Output:", JSON.stringify(result, null, 2));
 
-    assert(result.metrics['SENS_Digil2_TC_F4A_L1.avg'] === 400, "Deve decodificare valore a 2 byte");
+    assert(result.data.metrics['SENS_FBG_TC_F4A_L1.avg'] === 400, "Deve decodificare valore a 2 byte");
 });
+
+function base64ArrayBuffer(bytes) {
+  var base64    = ''
+  var encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+  console.log("[BASE64] bytes",bytes,bytes.length)
+  var byteLength    = bytes.length
+  var byteRemainder = byteLength % 3  // <-- CORREZIONE QUI
+  var mainLength    = byteLength - byteRemainder
+  var a, b, c, d
+  var chunk
+  // Main loop deals with bytes in chunks of 3
+  for (var i = 0; i < mainLength; i = i + 3) {
+    // Combine the three bytes into a single integer
+    chunk = (bytes[i] << 16) | (bytes[i + 1] << 8) | bytes[i + 2]
+    // Use bitmasks to extract 6-bit segments from the triplet
+    a = (chunk & 16515072) >> 18 // 16515072 = (2^6 - 1) << 18
+    b = (chunk & 258048)   >> 12 // 258048   = (2^6 - 1) << 12
+    c = (chunk & 4032)     >>  6 // 4032     = (2^6 - 1) << 6
+    d = chunk & 63               // 63       = 2^6 - 1
+    // Convert the raw binary segments to the appropriate ASCII encoding
+    base64 += encodings[a] + encodings[b] + encodings[c] + encodings[d]
+  }
+  // Deal with the remaining bytes and padding
+  if (byteRemainder == 1) {
+    chunk = bytes[mainLength]
+    a = (chunk & 252) >> 2 // 252 = (2^6 - 1) << 2
+    // Set the 4 least significant bits to zero
+    b = (chunk & 3)   << 4 // 3   = 2^2 - 1
+    base64 += encodings[a] + encodings[b] + '=='
+  } else if (byteRemainder == 2) {
+    chunk = (bytes[mainLength] << 8) | bytes[mainLength + 1]
+    a = (chunk & 64512) >> 10 // 64512 = (2^6 - 1) << 10
+    b = (chunk & 1008)  >>  4 // 1008  = (2^6 - 1) << 4
+    // Set the 2 least significant bits to zero
+    c = (chunk & 15)    <<  2 // 15    = 2^4 - 1
+    base64 += encodings[a] + encodings[b] + encodings[c] + '='
+  }
+  
+  return base64
+}
 
 export { testRunner };

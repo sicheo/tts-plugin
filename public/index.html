@@ -64,10 +64,10 @@
 
         function TTNOTAManager() {
             const [config, setConfig] = useState({
-                serverUrl: 'https://eu1.cloud.thethings.network',
+                serverUrl: 'http://localhost:1885',
                 appId: 'test-ohms',
                 apiKey: 'NNSXS.QZULOVN6L3GKO5DYU6FQRFVD7UDKNRBOTJ6E5FA.V5BSGFES4CWUDQR5BIL56D666GBHG3WKVEV3RSIDWLSP2HPM43XA',
-                deviceId: 'ohms-fbf-test-01',
+                deviceId: 'digil-sic-006',
                 chunkSize: 50
             });
 
@@ -339,7 +339,7 @@
                                                     value={config.serverUrl}
                                                     onChange={(e) => setConfig({...config, serverUrl: e.target.value})}
                                                     className="w-full px-4 py-2 bg-slate-600 border border-slate-500 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                                    placeholder="https://eu1.cloud.thethings.network"
+                                                    placeholder="http://localhost:1885"
                                                 />
                                                 <p className="text-xs text-gray-400 mt-1">Per server locale: http://localhost:1885 o http://192.168.x.x:1885</p>
                                             </div>
