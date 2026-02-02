@@ -148,4 +148,4 @@ uploads
 terna_config*.json
 
 # sensors configuration
-sensori.csv
+# sensori.csv
