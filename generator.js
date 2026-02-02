@@ -12,7 +12,7 @@ const baseConfig = {
   "target_file": "terna_config005.json", // file traget per update firmware
   "temp_file": "update.tmp", // file temporaneo per update firmware
   "mqtt_server": "10.147.131.28", // mqtt server per accesso diretto via LTE
-  "mqtt_client_id": "Sicheo-digil-gateway", // mqtt client-id
+  "mqtt_client_id": "Sicheo-digil-gateway", // mqtt client-id 
   "mqtt_port": 31883, // porta server mqtt
   "mqtt_user": "Sicheo-digil-gateway_acf23911-a7ae-4d11-a34d-296137d69c45@c62e55b3-65b7-4ea3-8b2f-ce5b3086b426", // userid accesso server mqtt
   "mqtt_password": "pLMoKN2024$$", // password accesso server mqtt
