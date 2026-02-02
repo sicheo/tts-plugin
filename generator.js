@@ -27,8 +27,8 @@ const baseConfig = {
   "lte_debug": "OFF", // LTE debug flag
   "lte_mode": "NBIOT", // LTE mode
   "lte_cid": 1, // LTE cid
-  "lte_username":"23534D1-034A@nbiot.terna.it", // LTE access username
-  "lte_password":"034Anbiot23534D1", // LTE access password
+  "lte_username":"XXXXXXXXXXXX@nbiot.terna.it", // LTE access username
+  "lte_password":"XXXXXXXXXXXX", // LTE access password
   "lora_type": "OTAA", // Lora join mode
   "lora_version": "VERSION_1_1_X", // Lora version
   "lora_DevEUI": "7C5189FFFF022E00", // Lora DevEui
