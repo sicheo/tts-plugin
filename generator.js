@@ -9,8 +9,9 @@ const baseConfig = {
   "cpu_freq_power_save": 80, // frequenza cpu in energy saving mode in MHz
   "cpu_freq_critical": 40, // frequenza cpu in modalità critica in MHz
   "cpu_mac": "000000000000", // mac cpu
-  "target_file": "terna_config005.json", // file traget per update firmware
+  "target_file": "terna_config_XXXX.json", // file traget per update firmware
   "temp_file": "update.tmp", // file temporaneo per update firmware
+  "led_switch":true, // abilita switch on-off dell'illuminatore
   "mqtt_server": "10.147.131.28", // mqtt server per accesso diretto via LTE
   "mqtt_client_id": "Sicheo-digil-gateway", // mqtt client-id 
   "mqtt_port": 31883, // porta server mqtt
@@ -27,13 +28,13 @@ const baseConfig = {
   "lte_debug": "OFF", // LTE debug flag
   "lte_mode": "NBIOT", // LTE mode
   "lte_cid": 1, // LTE cid
-  "lte_username":"XXXXXXXXXXXX@nbiot.terna.it", // LTE access username
+  "lte_username":"XXXXXXXXXXXX@xxxxx.xxx.xx", // LTE access username
   "lte_password":"XXXXXXXXXXXX", // LTE access password
   "lora_type": "OTAA", // Lora join mode
   "lora_version": "VERSION_1_1_X", // Lora version
-  "lora_DevEUI": "7C5189FFFF022E00", // Lora DevEui
-  "lora_AppKey": "EC403152361A18A17C5189FFFF022E00", // Lora AppKey
-  "lora_NwKey": "E0403152361A18A17C5189FFFF022E00", // Lora NwKey
+  "lora_DevEUI": "XXXXXXXXXXXXXXXX", // Lora DevEui
+  "lora_AppKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", // Lora AppKey
+  "lora_NwKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", // Lora NwKey
   "lora_JoinEUI": "0000000000000000", // Lora JoinEui
   "lora_region": "REGION_EU68", // Lora region
   "lora_class": "CLASS_A", // Lora device Class
@@ -73,7 +74,7 @@ const baseConfig = {
   "param_tag_fase": "4", // FASE
   "param_tag_line": "1", // LINEA
   "param_tag_side": "B", // SIDE
-  "param_sensor_serial": "278331/0003", // Seriale sensore
+  "param_sensor_serial": "XXXXXX/XXXX", // Seriale sensore
   "param_temp_s1":-988609, // Coeff. s1 per calcolo temperatura assoluta
   "param_temp_s2":41318.24, // Coeff. s2 per calcolo temperatura assoluta
   "param_temp_s3":22.49595, // Coeff. s3 per calcolo temperatura assoluta
