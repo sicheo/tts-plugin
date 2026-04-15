@@ -3,7 +3,7 @@ const Papa = require('papaparse');
 
 // Template di configurazione base
 const baseConfig = {
-  "ohms_firmware_version": 1, // versione firmware
+  "ohms_firmware_version": 2, // versione firmware
   "ohms_serial": "0000", // seriale device
   "cpu_frequency": 80, // frequenza cpu default in MHz
   "cpu_freq_power_save": 80, // frequenza cpu in energy saving mode in MHz
@@ -12,7 +12,7 @@ const baseConfig = {
   "target_file": "terna_config_XXXX.json", // file traget per update firmware
   "temp_file": "update.tmp", // file temporaneo per update firmware
   "led_switch":true, // abilita switch on-off dell'illuminatore
-  "mqtt_server": "10.147.131.28", // mqtt server per accesso diretto via LTE
+  "mqtt_server": "10.147.131.29", // mqtt server per accesso diretto via LTE
   "mqtt_client_id": "Sicheo-digil-gateway", // mqtt client-id 
   "mqtt_port": 31883, // porta server mqtt
   "mqtt_user": "Sicheo-digil-gateway_acf23911-a7ae-4d11-a34d-296137d69c45@c62e55b3-65b7-4ea3-8b2f-ce5b3086b426", // userid accesso server mqtt
@@ -43,7 +43,7 @@ const baseConfig = {
   "lora_port_update": 200, // Lora update port
   "lora_dutycycle": 60000, // Lora dutycycle in usec
   "fbg_sample_freq": 1000, // frequenza campionamento misure in usec
-  "fbg_sample_window": 900, // numero di campionamenti per calcolo media
+  "fbg_sample_window": 300, // numero di campionamenti per calcolo media
   "fbg_uart": 2, // Uart di comunicazione con illuminatore
   "fbg_uart_baudrate": 3000000, // Uart baudrate
   "fbg_uart_databit": 8, // Uart data bit
@@ -61,9 +61,9 @@ const baseConfig = {
   "param_cable_L_zero": 100, // lunghezza tratta cavo
   "param_cable_alfa": 1,
   "param_cable_ro": 1,
-  "param_low_battery": 3.578, // soglia batteria bassa - invia allarme
-  "battery_critical_level": 3.574, // soglia batteria critica - disabilita radio
-  "battery_shutdown_level": 3.57, // il sistema va in deep sleep
+  "param_low_battery": 3.70, // soglia batteria bassa - invia allarme
+  "battery_critical_level": 3.55, // soglia batteria critica - disabilita radio
+  "battery_shutdown_level": 3.40, // il sistema va in deep sleep
   "charging_wakeup_minutes": 15, // periodo controllo se carica in corso in minuti
   "critical_wakeup_minutes": 60, // periodo di sleep in condizione critica 
   "enable_battery_manager": true, // Abilita/disabilita Battery Manager
@@ -86,14 +86,15 @@ const baseConfig = {
   "param_strain_B":0.000000574248, // coefficiente B per calcolo strain
   "param_strain_Lff":0.1385, // lunghezza f.o. sensore in m
   "param_strain_CTE":25, // coeff. dilatazione termica sensore
-  "param_strain_Lfal":0.1385,// lunghezza di montaggio sensore in m
+  "param_strain_Lfal":0.1385, // lunghezza di montaggio sensore in m
+  "development" : false, // flag per sviluppo o esercizio
   "ota_proxy_host": "onesait-device-proxy-col.coll.opencs.servizi.prv", // Hostname o IP del proxy per OTA update
   "ota_proxy_port": 443, // Porta del proxy per OTA update
   "ota_proxy_user": "", // Username per autenticazione proxy
   "ota_proxy_password": "", // Password per autenticazione proxy
   "ota_tenant": "DEFAULT", // Tenant per OTA update
   "ota_controller_id": "agent-1121621-PROTO-0006", // Controller ID per OTA update
-  "ota_poll_interval": 60, // Intervallo di polling per OTA update in secondi
+  "ota_poll_interval": 60 // Intervallo di polling per OTA update in secondi
 };
 
 // Leggi il file CSV
@@ -141,7 +142,9 @@ parsed.data.forEach((row) => {
     config.param_F_ahigh = parseFloat(row.FPERCH);
     config.param_F_alow = parseFloat(row.FPERL);
     config.param_cable_section = parseFloat(row.SECTION);
-    
+    config.fbg_uart_tx = parseInt(row.TX);
+    config.fbg_uart_rx = parseInt(row.RX);
+
     // Genera mqtt_application_id
     config.mqtt_application_id = `DEV_1-1-2-21-27-DIGIL_SIC_${seriale.padStart(4, '0')}_V1`;
     
