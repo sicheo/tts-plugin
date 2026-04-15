@@ -88,7 +88,7 @@ const baseConfig = {
   "param_strain_CTE":25, // coeff. dilatazione termica sensore
   "param_strain_Lfal":0.1385, // lunghezza di montaggio sensore in m
   "development" : false, // flag per sviluppo o esercizio
-  "ota_proxy_host": "onesait-device-proxy-col.coll.opencs.servizi.prv", // Hostname o IP del proxy per OTA update
+  "ota_proxy_host": "10.147.131.28", // Hostname o IP del proxy per OTA update
   "ota_proxy_port": 443, // Porta del proxy per OTA update
   "ota_proxy_user": "", // Username per autenticazione proxy
   "ota_proxy_password": "", // Password per autenticazione proxy
