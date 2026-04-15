@@ -85,7 +85,14 @@ const baseConfig = {
   "param_strain_B":0.000000574248, // coefficiente B per calcolo strain
   "param_strain_Lff":0.1385, // lunghezza f.o. sensore in m
   "param_strain_CTE":25, // coeff. dilatazione termica sensore
-  "param_strain_Lfal":0.1385 // lunghezza di montaggio sensore in m
+  "param_strain_Lfal":0.1385,// lunghezza di montaggio sensore in m
+  "ota_proxy_host": "onesait-device-proxy-col.coll.opencs.servizi.prv", // Hostname o IP del proxy per OTA update
+  "ota_proxy_port": 443, // Porta del proxy per OTA update
+  "ota_proxy_user": "", // Username per autenticazione proxy
+  "ota_proxy_password": "", // Password per autenticazione proxy
+  "ota_tenant": "DEFAULT", // Tenant per OTA update
+  "ota_controller_id": "agent-1121621-PROTO-0006", // Controller ID per OTA update
+  "ota_poll_interval": 60, // Intervallo di polling per OTA update in secondi
 };
 
 // Leggi il file CSV
