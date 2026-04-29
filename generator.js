@@ -3,7 +3,7 @@ const Papa = require('papaparse');
 
 // Template di configurazione base
 const baseConfig = {
-  "ohms_firmware_version": 2, // versione firmware
+  "ohms_firmware_version": "2.0", // versione firmware
   "ohms_serial": "0000", // seriale device
   "cpu_frequency": 80, // frequenza cpu default in MHz
   "cpu_freq_power_save": 80, // frequenza cpu in energy saving mode in MHz
