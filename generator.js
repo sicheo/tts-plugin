@@ -61,6 +61,7 @@ const baseConfig = {
   "param_cable_L_zero": 100, // lunghezza tratta cavo
   "param_cable_alfa": 1,
   "param_cable_ro": 1,
+  "battery_max": 4.80, // tensione massima batteria
   "param_low_battery": 3.70, // soglia batteria bassa - invia allarme
   "battery_critical_level": 3.55, // soglia batteria critica - disabilita radio
   "battery_shutdown_level": 3.40, // il sistema va in deep sleep
@@ -108,6 +109,9 @@ const parsed = Papa.parse(csvData, {
   skipEmptyLines: true
 });
 
+const parseNum = (val) => parseFloat(String(val).replace(',', '.'));
+const parseInt2 = (val) => parseInt(String(val).replace(',', '.'));
+
 // Genera i file di configurazione
 parsed.data.forEach((row) => {
   const comp = "D"
@@ -129,22 +133,22 @@ parsed.data.forEach((row) => {
     config.lte_username = row.USERNAME;
     config.lte_password = row.PASSWORD;
     config.param_sensor_serial = row.SENSID;
-    config.param_strain_A = parseFloat(row.A);
-    config.param_strain_B = parseFloat(row.B);
-    config.param_strain_Lff = parseFloat(row.LFFL);
-    config.param_strain_CTE = parseInt(row.CTE);
-    config.param_temp_s1 = parseFloat(row.S1);
-    config.param_temp_s2 = parseFloat(row.S2);
-    config.param_temp_s3 = parseFloat(row.S3);
-    config.param_temp_f0 = parseInt(row.LTREF*10000);
+    config.param_strain_A = parseNum(row.A);
+    config.param_strain_B = parseNum(row.B);
+    config.param_strain_Lff = parseNum(row.LFFL);
+    config.param_strain_CTE = parseInt2(row.CTE);
+    config.param_temp_s1 = parseNum(row.S1);
+    config.param_temp_s2 = parseNum(row.S2);
+    config.param_temp_s3 = parseNum(row.S3);
+    config.param_temp_f0 = parseInt2(parseNum(row.LTREF)*10000);
     config.param_strain_Lfal = config.param_strain_Lff;
-    config.param_cable_F_zero = parseInt(row.F0);
-    config.param_cable_F_max = parseInt(row.FMAX);
-    config.param_F_ahigh = parseFloat(row.FPERCH);
-    config.param_F_alow = parseFloat(row.FPERL);
-    config.param_cable_section = parseFloat(row.SECTION);
-    config.fbg_uart_tx = parseInt(row.TX);
-    config.fbg_uart_rx = parseInt(row.RX);
+    config.param_cable_F_zero = parseInt2(row.F0);
+    config.param_cable_F_max = parseInt2(row.FMAX);
+    config.param_F_ahigh = parseNum(row.FPERCH);
+    config.param_F_alow = parseNum(row.FPERL);
+    config.param_cable_section = parseNum(row.SECTION);
+    config.fbg_uart_tx = parseInt2(row.TX);
+    config.fbg_uart_rx = parseInt2(row.RX);
 
     // Genera mqtt_application_id
     config.mqtt_application_id = `DEV_1-1-2-21-27-DIGIL_SIC_${seriale.padStart(4, '0')}_V1`;
