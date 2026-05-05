@@ -95,7 +95,7 @@ const baseConfig = {
   "ota_proxy_user": "Sicheo-digil-gateway_acf23911-a7ae-4d11-a34d-296137d69c45@c62e55b3-65b7-4ea3-8b2f-ce5b3086b426", // Username per autenticazione proxy
   "ota_proxy_password": "pLMoKN2024$$", // Password per autenticazione proxy
   "ota_tenant": "DEFAULT", // Tenant per OTA update
-  "ota_controller_id": "acf23911-a7ae-4d11-a34d-296137d69c45", // Controller ID per OTA update
+  "ota_controller_id": "", // Controller ID per OTA update
   "ota_poll_interval": 60 // Intervallo di polling per OTA update in secondi
 };
 
@@ -149,6 +149,7 @@ parsed.data.forEach((row) => {
     config.param_cable_section = parseNum(row.SECTION);
     config.fbg_uart_tx = parseInt2(row.TX);
     config.fbg_uart_rx = parseInt2(row.RX);
+    config.ota_controller_id = row.OTACID;
 
     // Genera mqtt_application_id
     config.mqtt_application_id = `DEV_1-1-2-21-27-DIGIL_SIC_${seriale.padStart(4, '0')}_V1`;
