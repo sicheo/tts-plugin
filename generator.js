@@ -12,6 +12,8 @@ const baseConfig = {
   "target_file": "terna_config_XXXX.json", // file traget per update firmware
   "temp_file": "update.tmp", // file temporaneo per update firmware
   "led_switch":true, // abilita switch on-off dell'illuminatore
+  "switch_await": 1, // tempo di attesa in msec prima di spegnere l'illuminatore dopo accensione in sec.
+  "pre_switch_await": 1, // tempo di attesa in sec. prima di accendere l'illuminatore prima del campionamento
   "mqtt_server": "10.147.131.29", // mqtt server per accesso diretto via LTE
   "mqtt_client_id": "Sicheo-digil-gateway", // mqtt client-id 
   "mqtt_port": 31883, // porta server mqtt
@@ -89,6 +91,7 @@ const baseConfig = {
   "param_strain_CTE":25, // coeff. dilatazione termica sensore
   "param_strain_Lfal":0.1385, // lunghezza di montaggio sensore in m
   "development" : false, // flag per sviluppo o esercizio
+  "print_debug": false, // abilita stampa messaggi di debug
   "ota_proxy_host": "10.147.131.28",
   "ota_proxy_hostname": "onesait-device-proxy-col.coll.opencs.servizi.prv",
   "ota_proxy_port": 443, // Porta del proxy per OTA update
@@ -150,6 +153,7 @@ parsed.data.forEach((row) => {
     config.fbg_uart_tx = parseInt2(row.TX);
     config.fbg_uart_rx = parseInt2(row.RX);
     config.ota_controller_id = row.OTACID;
+    config.ota_proxy_user = `Sicheo-digil-gateway_${row.OTACID}@c62e55b3-65b7-4ea3-8b2f-ce5b3086b426`;
 
     // Genera mqtt_application_id
     config.mqtt_application_id = `DEV_1-1-2-21-27-DIGIL_SIC_${seriale.padStart(4, '0')}_V1`;
